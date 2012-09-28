@@ -663,6 +663,9 @@
 
 			function positionDragY(destY, animate)
 			{
+
+        if (settings.disabled){ return; }
+
 				if (!isScrollableV) {
 					return;
 				}
@@ -671,11 +674,12 @@
 				} else if (destY > dragMaxY) {
 					destY = dragMaxY;
 				}
-
+        
 				// can't just check if(animate) because false is a valid value that could be passed in...
 				if (animate === undefined) {
 					animate = settings.animateScroll;
 				}
+
 				if (animate) {
 					jsp.animate(verticalDrag, 'top', destY,	_positionDragY);
 				} else {
@@ -712,6 +716,9 @@
 
 			function positionDragX(destX, animate)
 			{
+
+        if (settings.disabled){ return; }
+
 				if (!isScrollableH) {
 					return;
 				}
@@ -1362,6 +1369,15 @@
 					// the content of your page (e.g. via AJAX) and want to make sure any new anchor links to the
 					// contents of your scroll pane will work then call this function.
 					hijackInternalLinks: $.noop,
+					
+          disable: function()
+					{
+            settings.disabled = true;
+					},
+          enable: function()
+					{
+            settings.disabled = false;
+					},
 					// Removes the jScrollPane and returns the page to the state it was in before jScrollPane was
 					// initialised.
 					destroy: function()
